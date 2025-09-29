@@ -1,4 +1,9 @@
+black>=24.0
+gymnasium
+numpy
 pyyaml>=6.0
 pytest>=8.0
-black>=24.0
 ruff>=0.4.0
+stable-baselines3
+tensorboard
+torch

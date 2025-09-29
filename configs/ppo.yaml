@@ -1,0 +1,17 @@
+algo: ppo
+seed: 0
+timesteps: 50000
+num_envs: 1
+eval_games: 20
+tensorboard_log: artifacts/tensorboard
+save_path: artifacts/released/ppo_latest.zip
+opponent: random
+random_first_player: true
+swap_start_probability: 0.5
+reset_num_timesteps: true
+rewards:
+  win: 1.0
+  loss: -1.0
+  draw: 0.0
+  invalid_move: -1.0
+  step: -0.01

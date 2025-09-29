@@ -94,9 +94,12 @@ class ConnectFourBoard:
         return total
 
     def as_player_view(self, player: int) -> List[List[int]]:
-        """Return a perspective copy where the current player is always 1."""
-        multiplier = 1 if player == 1 else -1
-        return [[cell * multiplier for cell in row] for row in self._grid]
+        """Return a perspective copy with player pieces as 1 and opponent as -1."""
+        opponent = 3 - player
+        view: List[List[int]] = []
+        for row in self._grid:
+            view.append([1 if cell == player else -1 if cell == opponent else 0 for cell in row])
+        return view
 
     def render(self) -> str:
         rows = ["|" + " ".join(str(cell) for cell in row) + "|" for row in self._grid]

@@ -1,3 +1,13 @@
+algo: random
 episodes: 1000
 seed: 0
 opponent: random
+eval_games: 20
+random_first_player: true
+swap_start_probability: 0.5
+rewards:
+  win: 1.0
+  loss: -1.0
+  draw: 0.0
+  invalid_move: -1.0
+  step: 0.0
