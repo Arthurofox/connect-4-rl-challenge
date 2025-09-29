@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+include = "src|tests"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+select = ["E", "F", "B", "I"]
+ignore = []
+per-file-ignores = {"tests/__init__.py" = ["F401"]}
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+pythonpath = ["src"]
