@@ -48,6 +48,20 @@ class ConnectFourBoard:
     def copy_grid(self) -> List[List[int]]:
         return [row.copy() for row in self._grid]
 
+    def numpy_board(self) -> np.ndarray:
+        """Return the internal board array with row 0 representing the top."""
+        return np.array(self._grid, dtype=np.int8)
+
+    def render_grid_bottom_first(self) -> np.ndarray:
+        """
+        Return a copy of the board where row 0 corresponds to the bottom row.
+
+        The internal representation stores row index 0 as the top of the board.
+        Visual renderers can use this helper to obtain a bottom-up view without
+        needing to reason about the internal orientation.
+        """
+        return np.flipud(self.numpy_board())
+
     def valid_moves(self) -> List[int]:
         return [col for col in range(self.columns) if self._grid[0][col] == 0]
 
