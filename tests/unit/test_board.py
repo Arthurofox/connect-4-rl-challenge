@@ -1,3 +1,4 @@
+import numpy as np
 import pytest
 
 from src.board import ConnectFourBoard, InvalidMoveError
@@ -26,3 +27,13 @@ def test_vertical_win_detection():
         board.drop(1)
     result = board.drop(0)
     assert result.winner == 1
+
+
+def test_encode_planes_to_move_plane():
+    board = ConnectFourBoard()
+    planes_p1 = board.encode_planes(1)
+    planes_p2 = board.encode_planes(2)
+
+    assert planes_p1.shape == (3, board.rows, board.columns)
+    assert np.allclose(planes_p1[2], 1.0)
+    assert np.allclose(planes_p2[2], -1.0)

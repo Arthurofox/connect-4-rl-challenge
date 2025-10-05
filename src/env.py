@@ -1,4 +1,5 @@
 """Gymnasium environment wrapping the Connect-Four board."""
+
 from __future__ import annotations
 
 from typing import Any, Dict, Optional, Tuple
@@ -70,7 +71,10 @@ class ConnectFourEnv(Env):
             self.np_random, _ = seeding.np_random(seed)
 
         self.board.reset()
-        if self.random_first_player and self.np_random.random() < self.swap_start_probability:
+        if (
+            self.random_first_player
+            and self.np_random.random() < self.swap_start_probability
+        ):
             self.board.current_player = 2
             # Opponent makes an opening move before the agent acts.
             _, _, _, _ = self._opponent_turn(initial_move=True)
@@ -107,7 +111,9 @@ class ConnectFourEnv(Env):
         else:
             if self.reward_step:
                 reward += self.reward_step
-                reward_breakdown["step"] = reward_breakdown.get("step", 0.0) + self.reward_step
+                reward_breakdown["step"] = (
+                    reward_breakdown.get("step", 0.0) + self.reward_step
+                )
             opp_reward, terminated, opp_breakdown, opponent_move = self._opponent_turn()
             reward += opp_reward
             reward_breakdown.update(opp_breakdown)
@@ -171,7 +177,9 @@ class ConnectFourEnv(Env):
         opponent: Optional[Agent] = None,
     ) -> None:
         if swap_start_probability is not None:
-            self.swap_start_probability = float(np.clip(swap_start_probability, 0.0, 1.0))
+            self.swap_start_probability = float(
+                np.clip(swap_start_probability, 0.0, 1.0)
+            )
         if reward_overrides:
             self.set_reward_scheme(**reward_overrides)
         if opponent is not None:

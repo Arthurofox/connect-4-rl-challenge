@@ -1,4 +1,5 @@
 """Baseline agent that selects uniformly random legal moves."""
+
 from __future__ import annotations
 
 import random

@@ -23,12 +23,16 @@ def test_invalid_move_penalizes_agent():
     assert terminated is True
     assert reward < 0
     assert info.get("invalid_move") is True
-    assert info["reward_breakdown"]["invalid_move"] == pytest.approx(env.invalid_move_penalty)
+    assert info["reward_breakdown"]["invalid_move"] == pytest.approx(
+        env.invalid_move_penalty
+    )
     assert obs.shape == (6, 7)
 
 
 def test_step_reward_shaping_applied():
-    env = ConnectFourEnv(random_first_player=False, reward_step=-0.05, opponent=RandomAgent(seed=0))
+    env = ConnectFourEnv(
+        random_first_player=False, reward_step=-0.05, opponent=RandomAgent(seed=0)
+    )
     env.reset(seed=123)
     _, reward, terminated, _, info = env.step(3)
     assert info["reward_breakdown"].get("step") == pytest.approx(-0.05)

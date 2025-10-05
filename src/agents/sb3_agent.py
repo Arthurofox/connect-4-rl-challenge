@@ -1,4 +1,5 @@
 """Stable-Baselines3 agent wrapper for Connect-Four."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -50,7 +51,9 @@ class SB3Agent(Agent):
         loader: Optional[Type[BaseAlgorithm]] = _SB3_LOADERS.get(algorithm.lower())
         if loader is None:
             raise ValueError(f"Unsupported algorithm: {algorithm}")
-        model = loader.load(path, device=device, **kwargs)
+        load_kwargs = {"device": device or "cpu"}
+        load_kwargs.update(kwargs)
+        model = loader.load(path, **load_kwargs)
         return cls(model=model, deterministic=deterministic, name=f"sb3-{algorithm}")
 
 

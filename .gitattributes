@@ -1,0 +1,2 @@
+artifacts/released/muzero_latest.pt filter=lfs diff=lfs merge=lfs -text
+artifacts/released/muzero_longrun.pt filter=lfs diff=lfs merge=lfs -text

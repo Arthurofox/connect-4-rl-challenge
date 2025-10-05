@@ -1,0 +1,38 @@
+algo: muzero
+seed: 42
+device: auto
+self_play:
+  games_per_iter: 200
+  max_moves: 42
+  temperature_moves: 6
+  dirichlet_alpha: 0.3
+  dirichlet_eps: 0.25
+mcts:
+  simulations: 200
+  c_puct: 2.5
+  value_discount: 1.0
+model:
+  channels: 64
+  res_blocks: 6
+  latent_dim: 128
+  unroll_steps: 4
+train:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  grad_clip: 1.0
+  epochs_per_iter: 200
+  replay_capacity: 100000
+  warm_start_steps: 5000
+  amp: true
+  policy_weight: 1.0
+  value_weight: 1.0
+  reward_weight: 0.5
+logging:
+  tensorboard: artifacts/tensorboard/muzero
+  ckpt_dir: artifacts/released
+  save_every_iters: 5
+eval:
+  games: 200
+  opponent: alphabeta
+  opponent_depth: 9
