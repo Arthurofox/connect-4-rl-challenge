@@ -14,7 +14,7 @@ from src.agents.muzero import MuZeroAgent, resolve_device
 from src.match import play_match
 
 SUPPORTED_ALGOS = ["random", "ppo", "muzero", "alphabeta"]
-SUPPORTED_OPPONENTS = ["random", "alphabeta", "muzero"]
+SUPPORTED_OPPONENTS = ["random", "alphabeta", "muzero", "dqn"]
 
 
 def parse_args(argv: Optional[Any] = None) -> argparse.Namespace:
@@ -47,6 +47,11 @@ def parse_args(argv: Optional[Any] = None) -> argparse.Namespace:
         type=int,
         default=9,
         help="Depth for alpha-beta opponent",
+    )
+    parser.add_argument(
+        "--opponent-checkpoint",
+        type=Path,
+        help="Checkpoint to load when the opponent is DQN or MuZero",
     )
     parser.add_argument(
         "--render",
@@ -142,15 +147,25 @@ def build_opponent(args: argparse.Namespace):
     if args.opponent == "alphabeta":
         return AlphaBetaAgent(depth=args.opponent_depth)
     if args.opponent == "muzero":
-        # Mirror agent; reload checkpoint and use deterministic play
-        if args.checkpoint is None or not args.checkpoint.exists():
-            raise FileNotFoundError("Opponent MuZero requires a valid checkpoint")
+        checkpoint = args.opponent_checkpoint or args.checkpoint
+        if checkpoint is None:
+            raise FileNotFoundError("Opponent MuZero requires a valid checkpoint path")
+        checkpoint_path = Path(checkpoint)
+        if not checkpoint_path.exists():
+            raise FileNotFoundError(f"Opponent MuZero checkpoint not found: {checkpoint_path}")
         device = resolve_device(args.device)
-        opponent = MuZeroAgent.from_checkpoint(args.checkpoint, device=device)
+        opponent = MuZeroAgent.from_checkpoint(checkpoint_path, device=device)
         opponent.eval_stochastic = False
         if hasattr(opponent, "debug_mcts"):
             opponent.debug_mcts = False
         return opponent
+    if args.opponent == "dqn":
+        if args.opponent_checkpoint is None or not args.opponent_checkpoint.exists():
+            raise FileNotFoundError("DQN opponent requires --opponent-checkpoint")
+        from final_eval.dqn_agent import DQNAgent
+
+        device = resolve_device(args.device)
+        return DQNAgent.load_from_checkpoint(args.opponent_checkpoint, device=str(device))
     raise ValueError(f"Unsupported opponent '{args.opponent}'")
 
 
@@ -171,6 +186,8 @@ def main(argv: Optional[Any] = None) -> None:
             if sims_val is None:
                 sims_val = getattr(policy, "sims", None)
             return f"MuZero(sims={sims_val})"
+        if name == "dqn":
+            return "DQN"
         depth_val = getattr(policy, "depth", None)
         if depth_val is not None:
             return f"AlphaBeta(depth={depth_val})"
