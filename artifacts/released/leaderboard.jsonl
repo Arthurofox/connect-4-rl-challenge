@@ -1,0 +1,6 @@
+{"iter": 30, "sims": 160, "opponent": "random", "depth": null, "wdl": "47-0-3", "win_rate": 0.94}
+{"iter": 30, "sims": 160, "opponent": "alphabeta", "depth": 5, "wdl": "50-0-0", "win_rate": 1.0}
+{"iter": 130, "sims": 160, "opponent": "random", "depth": null, "wdl": "49-0-1", "win_rate": 0.98}
+{"iter": 150, "sims": 160, "opponent": "random", "depth": null, "wdl": "96-0-4", "win_rate": 0.96}
+{"iter": 150, "sims": 160, "opponent": "alphabeta", "depth": 7, "wdl": "100-0-0", "win_rate": 1.0}
+{"iter": 330, "sims": 160, "opponent": "random", "depth": null, "wdl": "100-0-0", "win_rate": 1.0}

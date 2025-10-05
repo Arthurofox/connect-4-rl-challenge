@@ -1,0 +1,11 @@
+alive-progress
+black>=24.0
+gymnasium>=0.29
+numpy>=1.26
+pyyaml>=6.0
+pytest>=8.0
+ruff>=0.4.0
+stable-baselines3
+tensorboard>=2.16
+torch>=2.2
+tqdm>=4.66

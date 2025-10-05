@@ -1,2 +1,12 @@
 .env
 venv/
+__pycache__/
+*.pyc
+artifacts/*
+!artifacts/.gitkeep
+!artifacts/released/
+!artifacts/released/.gitkeep
+artifacts/released/muzero_latest.pt
+artifacts/released/muzero_longrun.pt
+artifacts/released/muzero_latest.pt
+artifacts/released/muzero_longrun.pt
