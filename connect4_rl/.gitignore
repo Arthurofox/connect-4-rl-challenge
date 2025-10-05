@@ -1,0 +1,45 @@
+cat > .gitignore << 'EOF'
+# ======================================================
+# 🧠 Connect-4 RL Project — .gitignore
+# ======================================================
+
+# --- Python cache files ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Virtual environment ---
+.venv/
+env/
+venv/
+
+# --- Logs and temporary files ---
+*.log
+*.tmp
+*.bak
+*.swp
+
+# --- Streamlit cache ---
+.streamlit/
+.streamlit_cache/
+
+# --- Mac system files ---
+.DS_Store
+
+# --- Jupyter / VSCode metadata ---
+.ipynb_checkpoints/
+.vscode/
+
+# --- Model checkpoints ---
+# Uncomment if you don't want to upload heavy models
+# runs/*.pt
+
+# --- Training artifacts / temp runs ---
+wandb/
+runs/events.out.tfevents.*
+
+# --- Other caches ---
+__cache__/
+.cache/
+EOF
